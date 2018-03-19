@@ -110,20 +110,20 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wh-bY-jzK">
-                                                    <rect key="frame" x="154" y="58.5" width="25" height="25"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wh-bY-jzK">
+                                                    <rect key="frame" x="154" y="59" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="O02-V1-pUc"/>
                                                         <constraint firstAttribute="height" constant="25" id="top-G5-VB2"/>
                                                     </constraints>
-                                                    <state key="normal" backgroundImage="retweet-icon"/>
+                                                    <state key="normal" image="retweet-icon"/>
                                                     <connections>
                                                         <action selector="retweetButton:" destination="U1g-kw-izy" eventType="touchUpInside" id="Qa5-xx-opy"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldh-Yc-gT6">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldh-Yc-gT6">
                                                     <rect key="frame" x="76" y="56" width="30" height="30"/>
-                                                    <state key="normal" backgroundImage="reply-icon"/>
+                                                    <state key="normal" image="reply-icon"/>
                                                     <connections>
                                                         <action selector="replyButton:" destination="U1g-kw-izy" eventType="touchUpInside" id="oPz-AP-1GG"/>
                                                     </connections>
@@ -150,7 +150,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhu-Jc-3DT">
-                                                    <rect key="frame" x="254" y="63.5" width="21" height="15"/>
+                                                    <rect key="frame" x="253.5" y="63.5" width="21" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="XCs-xr-htL"/>
                                                     </constraints>
@@ -158,13 +158,13 @@
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VW-hA-W0V">
-                                                    <rect key="frame" x="227" y="57.5" width="25" height="25"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VW-hA-W0V">
+                                                    <rect key="frame" x="226.5" y="58" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="OCr-P6-J3H"/>
                                                         <constraint firstAttribute="height" constant="25" id="RkQ-lv-NA2"/>
                                                     </constraints>
-                                                    <state key="normal" backgroundImage="favor-icon"/>
+                                                    <state key="normal" image="favor-icon"/>
                                                     <connections>
                                                         <action selector="favoriteButton:" destination="U1g-kw-izy" eventType="touchUpInside" id="gmf-MK-aHv"/>
                                                     </connections>
@@ -199,6 +199,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="createdDateLabel" destination="QHx-7c-dN8" id="6Lj-As-e4g"/>
+                                            <outlet property="favoriteButton" destination="6VW-hA-W0V" id="Yfd-qo-BLB"/>
                                             <outlet property="favoriteCountLabel" destination="qhu-Jc-3DT" id="9Sg-AW-192"/>
                                             <outlet property="nameLabel" destination="2tt-8w-WqS" id="t1V-qt-kUN"/>
                                             <outlet property="profileImage" destination="ytW-GS-qQF" id="OnB-Rr-t1R"/>

@@ -34,7 +34,19 @@ class TweetCell: UITableViewCell {
     }
  
     @IBAction func favoriteButton(_ sender: Any) {
+        
+        APIManager.shared.favorite(tweet) { (tweet: Tweet?, error: Error?) in
+            if let  error = error {
+                print("Error favoriting tweet: \(error.localizedDescription)")
+            } else if let tweet = tweet {
+                self.tweet.favorited = true
+                self.tweet.favoriteCount += 1
+                self.refreshData()
+            }
+        }
     }
+    
+    @IBOutlet weak var favoriteButton: UIButton!
     
     var tweet: Tweet! {
         didSet {
@@ -43,9 +55,13 @@ class TweetCell: UITableViewCell {
             screenNameLabel.text = "@" + tweet.user.screenName
             createdDateLabel.text = tweet.createdAtString
             profileImage.af_setImage(withURL: tweet.user.profileImageUrl)
+            if tweet.favorited {
+                favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
+            } else {
+                favoriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
+            }
             retweetCountLabel.text = String(describing: tweet.retweetCount)
-            favoriteCountLabel.text = String(describing: tweet.favoriteCount!)
-            print(tweet.user.profileImageUrl)
+            favoriteCountLabel.text = String(describing: tweet.favoriteCount)
         }
     }
     
@@ -58,6 +74,21 @@ class TweetCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    func refreshData() {
+        tweetTextLabel.text = tweet.text
+        nameLabel.text = tweet.user.name
+        screenNameLabel.text = "@" + tweet.user.screenName
+        createdDateLabel.text = tweet.createdAtString
+        profileImage.af_setImage(withURL: tweet.user.profileImageUrl)
+        if tweet.favorited {
+            favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
+        } else {
+            favoriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
+        }
+        retweetCountLabel.text = String(describing: tweet.retweetCount)
+        favoriteCountLabel.text = String(describing: tweet.favoriteCount)
     }
     
 }

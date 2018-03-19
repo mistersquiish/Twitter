@@ -15,8 +15,8 @@ import KeychainAccess
 class APIManager: SessionManager {
     
     // MARK: TODO: Add App Keys
-    static let consumerKey = "60UMXheEk3VQYSNFu9T6VQBOO"
-    static let consumerSecret = "dOg8Xj83SU6XQ5vtoDz1bCDEYQJfbsTKULyyeZU164KKxtd33t"
+    static let consumerKey = "L4gMMp5HkbWPOcDoUnrqVa5bq"
+    static let consumerSecret = "lmGAZ9ke4BB9m8ywrCzLjXiXtJQdJLMxkKMc8mmknA8aBKw9Us"
 
     static let requestTokenURL = "https://api.twitter.com/oauth/request_token"
     static let authorizeURL = "https://api.twitter.com/oauth/authorize"
@@ -80,6 +80,7 @@ class APIManager: SessionManager {
 
         // This uses tweets from disk to avoid hitting rate limit. Comment out if you want fresh
         // tweets,
+        /*
         if let data = UserDefaults.standard.object(forKey: "hometimeline_tweets") as? Data {
             let tweetDictionaries = NSKeyedUnarchiver.unarchiveObject(with: data) as! [[String: Any]]
             let tweets = tweetDictionaries.flatMap({ (dictionary) -> Tweet in
@@ -89,6 +90,7 @@ class APIManager: SessionManager {
             completion(tweets, nil)
             return
         }
+        */
 
         request(URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")!, method: .get)
             .validate()
@@ -117,7 +119,20 @@ class APIManager: SessionManager {
         }
     }
     
-    // MARK: TODO: Favorite a Tweet
+    func favorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
+        let urlString = "https://api.twitter.com/1.1/favorites/create.json"
+        let parameters = ["id": tweet.id]
+        request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+            if response.result.isSuccess,
+                let tweetDictionary = response.result.value as? [String: Any] {
+                let tweet = Tweet(dictionary: tweetDictionary)
+                completion(tweet, nil)
+            } else {
+                completion(nil, response.result.error)
+            }
+        }
+    }
+    
     
     // MARK: TODO: Un-Favorite a Tweet
     
