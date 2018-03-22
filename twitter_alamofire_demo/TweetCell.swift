@@ -31,22 +31,56 @@ class TweetCell: UITableViewCell {
     }
     
     @IBAction func retweetButton(_ sender: Any) {
+        if tweet.retweeted {
+            APIManager.shared.unRetweet(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error retweeting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    self.tweet.retweeted = false
+                    self.tweet.retweetCount -= 1
+                    self.refreshData()
+                }
+            }
+        } else {
+            APIManager.shared.retweet(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error retweeting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    self.tweet.retweeted = true
+                    self.tweet.retweetCount += 1
+                    self.refreshData()
+                }
+            }
+        }
     }
  
     @IBAction func favoriteButton(_ sender: Any) {
-        
-        APIManager.shared.favorite(tweet) { (tweet: Tweet?, error: Error?) in
-            if let  error = error {
-                print("Error favoriting tweet: \(error.localizedDescription)")
-            } else if let tweet = tweet {
-                self.tweet.favorited = true
-                self.tweet.favoriteCount += 1
-                self.refreshData()
+        if tweet.favorited {
+            APIManager.shared.unFavorite(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error unfavoriting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    self.tweet.favorited = false
+                    self.tweet.favoriteCount -= 1
+                    self.refreshData()
+                }
+            }
+        } else {
+            APIManager.shared.favorite(tweet) { (tweet: Tweet?, error: Error?) in
+                if let  error = error {
+                    print("Error favoriting tweet: \(error.localizedDescription)")
+                } else if let tweet = tweet {
+                    self.tweet.favorited = true
+                    self.tweet.favoriteCount += 1
+                    self.refreshData()
+                }
             }
         }
     }
     
     @IBOutlet weak var favoriteButton: UIButton!
+    
+    @IBOutlet weak var retweetButton: UIButton!
     
     var tweet: Tweet! {
         didSet {
@@ -86,6 +120,11 @@ class TweetCell: UITableViewCell {
             favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
         } else {
             favoriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
+        }
+        if tweet.retweeted {
+            retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
+        } else {
+            retweetButton.setImage(UIImage(named: "retweet-icon"), for: .normal)
         }
         retweetCountLabel.text = String(describing: tweet.retweetCount)
         favoriteCountLabel.text = String(describing: tweet.favoriteCount)

@@ -69,7 +69,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ctl-bI-Eag">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetCell" rowHeight="132" id="U1g-kw-izy" customClass="TweetCell" customModule="twitter_alamofire_demo" customModuleProvider="target">
@@ -204,6 +204,7 @@
                                             <outlet property="nameLabel" destination="2tt-8w-WqS" id="t1V-qt-kUN"/>
                                             <outlet property="profileImage" destination="ytW-GS-qQF" id="OnB-Rr-t1R"/>
                                             <outlet property="replyCountLabel" destination="Oya-ta-BDy" id="vEg-Lq-hSY"/>
+                                            <outlet property="retweetButton" destination="0wh-bY-jzK" id="uB8-Kt-W5G"/>
                                             <outlet property="retweetCountLabel" destination="q22-BL-9Er" id="Y2R-gB-Jii"/>
                                             <outlet property="screenNameLabel" destination="MY1-nS-XLA" id="0kv-jQ-Y2C"/>
                                             <outlet property="tweetTextLabel" destination="epC-Fs-Q5Z" id="ZLP-IG-Wsf"/>
