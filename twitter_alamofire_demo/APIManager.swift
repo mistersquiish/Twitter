@@ -15,8 +15,8 @@ import KeychainAccess
 class APIManager: SessionManager {
     
     // MARK: TODO: Add App Keys
-    static let consumerKey = "Q1l91MbvzuAZbmYB25VorYSdx"
-    static let consumerSecret = "EWzpQY1w7H246m4yBtNjgCfFhUkg5RZA6753BdEo18F0BBoNRb"
+    static let consumerKey = "XWmRZdN9bIyMsvBjLd1A2qFsl"
+    static let consumerSecret = "o04d58r9efXEjNUZZFeXyyJQc6o7VfMHcSI5JjkeAxjVzD3V1K"
 
     static let requestTokenURL = "https://api.twitter.com/oauth/request_token"
     static let authorizeURL = "https://api.twitter.com/oauth/authorize"
@@ -26,7 +26,6 @@ class APIManager: SessionManager {
     
     // MARK: Twitter API methods
     func login(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
-        
         // Add callback url to open app when returning from Twitter login on web
         let callbackURL = URL(string: APIManager.callbackURLString)!
         oauthManager.authorize(withCallbackURL: callbackURL, success: { (credential, _response, parameters) in
