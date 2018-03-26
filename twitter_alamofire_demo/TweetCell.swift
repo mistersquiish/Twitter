@@ -19,7 +19,7 @@ class TweetCell: UITableViewCell {
     
     @IBOutlet weak var tweetTextLabel: UILabel!
     
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!
     
     @IBOutlet weak var replyCountLabel: UILabel!
     
@@ -88,7 +88,7 @@ class TweetCell: UITableViewCell {
             nameLabel.text = tweet.user.name
             screenNameLabel.text = "@" + tweet.user.screenName
             createdDateLabel.text = tweet.createdAtString
-            profileImage.af_setImage(withURL: tweet.user.profileImageUrl)
+            profileImageView.af_setImage(withURL: tweet.user.profileImageUrl)
             if tweet.favorited {
                 favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
             } else {
@@ -115,7 +115,7 @@ class TweetCell: UITableViewCell {
         nameLabel.text = tweet.user.name
         screenNameLabel.text = "@" + tweet.user.screenName
         createdDateLabel.text = tweet.createdAtString
-        profileImage.af_setImage(withURL: tweet.user.profileImageUrl)
+        profileImageView.af_setImage(withURL: tweet.user.profileImageUrl)
         if tweet.favorited {
             favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
         } else {

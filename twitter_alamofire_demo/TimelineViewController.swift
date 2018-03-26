@@ -8,12 +8,16 @@
 
 import UIKit
 
-class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class TimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ComposeViewControllerDelegate {
+
     var tweets: [Tweet] = []
     var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBAction func composeButton(_ sender: Any) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,5 +82,14 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
-
+    
+    // ComposeViewControllerDelegate protocol method
+    func did(post: Tweet) {
+        refreshControlAction(refreshControl)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationViewController = segue.destination as! ComposeViewController
+        destinationViewController.delegate = self
+    }
 }
