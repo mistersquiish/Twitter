@@ -72,7 +72,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         if newText.count > 140 {
             characterCountLabel.text = "140"
         } else {
-            characterCountLabel.text = "\(newText.count)"
+            characterCountLabel.text = "\(140 - newText.count)"
         }
         
         // The new text should be allowed? True/False

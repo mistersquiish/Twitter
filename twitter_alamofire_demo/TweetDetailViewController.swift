@@ -1,34 +1,32 @@
 //
-//  TweetCell.swift
+//  TweetDetailViewController.swift
 //  twitter_alamofire_demo
 //
-//  Created by Charles Hieger on 6/18/17.
-//  Copyright © 2017 Charles Hieger. All rights reserved.
+//  Created by Henry Vuong on 3/26/18.
+//  Copyright © 2018 Charles Hieger. All rights reserved.
 //
 
 import UIKit
-import AlamofireImage
 
-class TweetCell: UITableViewCell {
+class TweetDetailViewController: UIViewController {
+
+    @IBOutlet weak var photoView: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var screenNameLabel: UILabel!
     
-    @IBOutlet weak var createdDateLabel: UILabel!
+    @IBOutlet weak var tweetTextField: UITextView!
     
-    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var retweetLabel: UILabel!
     
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var favoritesLabel: UILabel!
     
-    @IBOutlet weak var replyCountLabel: UILabel!
+    @IBOutlet weak var retweetButtonOutlet: UIButton!
     
-    @IBOutlet weak var retweetCountLabel: UILabel!
+    @IBOutlet weak var favoriteButtonOutlet: UIButton!
     
-    @IBOutlet weak var favoriteCountLabel: UILabel!
-    
-    @IBAction func replyButton(_ sender: Any) {
-    }
+    var tweet: Tweet!
     
     @IBAction func retweetButton(_ sender: Any) {
         if tweet.retweeted {
@@ -53,7 +51,7 @@ class TweetCell: UITableViewCell {
             }
         }
     }
- 
+    
     @IBAction func favoriteButton(_ sender: Any) {
         if tweet.favorited {
             APIManager.shared.unFavorite(tweet) { (tweet: Tweet?, error: Error?) in
@@ -78,45 +76,36 @@ class TweetCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var favoriteButton: UIButton!
     
-    @IBOutlet weak var retweetButton: UIButton!
     
-    var tweet: Tweet! {
-        didSet {
-            refreshData()
-        }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        // Configure the view for the selected state
+        refreshData()
+
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     func refreshData() {
-        tweetTextLabel.text = tweet.text
+        tweetTextField.text = tweet.text
         nameLabel.text = tweet.user.name
         screenNameLabel.text = "@" + tweet.user.screenName
-        createdDateLabel.text = tweet.createdAtString
-        profileImageView.af_setImage(withURL: tweet.user.profileImageUrl)
+        photoView.af_setImage(withURL: tweet.user.profileImageUrl)
         if tweet.favorited {
-            favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
+            favoriteButtonOutlet.setImage(UIImage(named: "favor-icon-red"), for: .normal)
         } else {
-            favoriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
+            favoriteButtonOutlet.setImage(UIImage(named: "favor-icon"), for: .normal)
         }
         if tweet.retweeted {
-            retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
+            retweetButtonOutlet.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
         } else {
-            retweetButton.setImage(UIImage(named: "retweet-icon"), for: .normal)
+            retweetButtonOutlet.setImage(UIImage(named: "retweet-icon"), for: .normal)
         }
-        retweetCountLabel.text = String(describing: tweet.retweetCount)
-        favoriteCountLabel.text = String(describing: tweet.favoriteCount)
+        retweetLabel.text = String(describing: tweet.retweetCount)
+        favoritesLabel.text = String(describing: tweet.favoriteCount)
     }
     
 }
