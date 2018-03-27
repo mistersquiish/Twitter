@@ -13,6 +13,9 @@ class User {
     var name: String
     var screenName: String
     var profileImageUrl: URL
+    var followersCount: Int
+    var followingsCount: Int
+    var backgroundImageUrl: URL
     // for persisting user
     var dictionary: [String: Any]?
     private static var _current: User?
@@ -43,8 +46,9 @@ class User {
         self.dictionary = dictionary
         name = dictionary["name"] as! String
         screenName = dictionary["screen_name"] as! String
-        let str = dictionary["profile_image_url"] as! String
-        let truncated = String(str.characters.dropFirst(4))
-        profileImageUrl = URL(string: "https" + truncated)!
+        profileImageUrl = URL(string: dictionary["profile_image_url_https"] as! String)!
+        backgroundImageUrl = URL(string: dictionary["profile_background_image_url_https"] as! String)!
+        followersCount = dictionary["followers_count"] as! Int
+        followingsCount = dictionary["friends_count"] as! Int
     }
 }
