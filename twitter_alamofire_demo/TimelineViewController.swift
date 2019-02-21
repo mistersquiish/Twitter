@@ -15,9 +15,33 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var tableView: UITableView!
     
+    // constraints for tableView
+    @IBOutlet weak var tableViewLeadingC: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTrailingC: NSLayoutConstraint!
+    
+    var hamburgerMenuIsVisible = false
+    
+    @IBOutlet weak var stackView: UIStackView!
+    
     @IBAction func composeButton(_ sender: Any) {
         
     }
+    
+    @IBAction func hamburgerButtonTapped(_ sender: Any) {
+        if !hamburgerMenuIsVisible {
+            tableViewLeadingC.constant = stackView.frame.width
+            tableViewTrailingC.constant = stackView.frame.width * -1
+            hamburgerMenuIsVisible = true
+        } else {
+            closeHamburgerMenu()
+        }
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +112,13 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         refreshControlAction(refreshControl)
     }
     
+    // close hamburger menu method for when navigating to any other view
+    func closeHamburgerMenu() {
+        tableViewLeadingC.constant = 0
+        tableViewTrailingC.constant = 0
+        hamburgerMenuIsVisible = false
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "composeSegue" {
             let destinationViewController = segue.destination as! ComposeViewController
@@ -101,5 +132,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
         }
+        closeHamburgerMenu()
     }
 }

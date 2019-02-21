@@ -48,7 +48,7 @@ Describe any challenges encountered while building the app.
 
 # Project 6 - *Twitter*
 
-Time spent: **1.5** hours spent in total
+Time spent: **3** hours spent in total
 
 ## User Stories
 
