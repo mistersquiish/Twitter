@@ -20,27 +20,24 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableViewTrailingC: NSLayoutConstraint!
     
     var hamburgerMenuIsVisible = false
+    var user: User! = User.current
+
+    @IBOutlet weak var hamburgerMenuView: UIView!
     
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var screenNameLabel: UILabel!
+    @IBOutlet var followingCountLabel: UILabel!
+    @IBOutlet var followerCountLabel: UILabel!
+    
+    @IBOutlet weak var profileButtonOutlet: UIButton!
+    @IBOutlet weak var logoutButtonOutlet: UIButton!
     
     @IBAction func composeButton(_ sender: Any) {
         
     }
     
-    @IBAction func hamburgerButtonTapped(_ sender: Any) {
-        if !hamburgerMenuIsVisible {
-            tableViewLeadingC.constant = stackView.frame.width
-            tableViewTrailingC.constant = stackView.frame.width * -1
-            hamburgerMenuIsVisible = true
-        } else {
-            closeHamburgerMenu()
-        }
-        
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
-            self.view.layoutIfNeeded()
-        }) { (animationComplete) in
-        }
-    }
+
     
     
     override func viewDidLoad() {
@@ -66,6 +63,16 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 print("Error getting home timeline: " + error.localizedDescription)
             }
         }
+        
+        nameLabel.text = user.name
+        screenNameLabel.text = "@" + user.screenName
+        profileImageView.af_setImage(withURL: user.profileImageUrl)
+        followerCountLabel.text = String(user.followersCount)
+        followingCountLabel.text = String(user.followingsCount)
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.borderWidth = 0
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.clipsToBounds = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,10 +95,55 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func hamburgerButtonTapped(_ sender: Any) {
+        if !hamburgerMenuIsVisible {
+            openHamburgerMenu()
+        } else {
+            closeHamburgerMenu()
+        }
+    }
     
-    @IBAction func didTapLogout(_ sender: Any) {
+    @IBAction func swipeRightGesture(_ sender: Any) {
+        if !hamburgerMenuIsVisible {
+            openHamburgerMenu()
+        }
+        
+        
+    }
+    
+    @IBAction func swipeLeftGesture(_ sender: Any) {
+        if hamburgerMenuIsVisible {
+            closeHamburgerMenu()
+        }
+    }
+    
+    // close hamburger menu method for when navigating to any other view
+    func closeHamburgerMenu() {
+        tableViewLeadingC.constant = 0
+        tableViewTrailingC.constant = 0
+        hamburgerMenuIsVisible = false
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+    }
+    
+    // open hamburger menu method for reusable code
+    func openHamburgerMenu() {
+        tableViewLeadingC.constant = hamburgerMenuView.frame.width
+        tableViewTrailingC.constant = hamburgerMenuView.frame.width * -1
+        hamburgerMenuIsVisible = true
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+    }
+    
+    // logout
+    @IBAction func logoutButton(_ sender: Any) {
         APIManager.shared.logout()
     }
+    
     
     // refresh controll
     @objc func refreshControlAction(_ refreshControl: UIRefreshControl) {
@@ -110,13 +162,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     // ComposeViewControllerDelegate protocol method
     func did(post: Tweet) {
         refreshControlAction(refreshControl)
-    }
-    
-    // close hamburger menu method for when navigating to any other view
-    func closeHamburgerMenu() {
-        tableViewLeadingC.constant = 0
-        tableViewTrailingC.constant = 0
-        hamburgerMenuIsVisible = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
